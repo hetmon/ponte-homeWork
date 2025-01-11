@@ -5,6 +5,8 @@ import hu.ponte.homework.pontevotehomework.domain.User;
 import hu.ponte.homework.pontevotehomework.dto.income.RegisterRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class UserMapper {
 
@@ -17,6 +19,8 @@ public class UserMapper {
         user.setPassword(password);
         user.setRole(Roles.USER);
         user.setUsableVotes(1);
+        user.setVotes(new ArrayList<>());
+        user.setIdeas(new ArrayList<>());
         return user;
     }
 }

@@ -44,40 +44,42 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(JsonParseException.class)
-    public ResponseEntity<ApiException> handleJsonParseException(JsonParseException ex) {
+    public ResponseEntity<ApiError> handleJsonParseException(JsonParseException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        ApiException body = new ApiException("JSON_PARSE_ERROR", "Invalid JSON request.", ex.getLocalizedMessage());
+        ApiError body = new ApiError(ex.getMessage(), "Invalid JSON request."
+                ,ZonedDateTime.now().toString());
         return new ResponseEntity<>(body, status);
     }
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ApiException> defaultErrorHandler(Throwable t) {
+    public ResponseEntity<ApiError> defaultErrorHandler(Throwable t) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiException body = new ApiException("UNCLASSIFIED_ERROR", "An unexpected error occurred.", t.getLocalizedMessage());
+        ApiError body = new ApiError(t.getMessage(), "An unexpected error occurred."
+                ,ZonedDateTime.now().toString());
 
         return new ResponseEntity<>(body, status);
     }
 
     @ExceptionHandler(IdeaNotExistsException.class)
-    public ResponseEntity<ApiException> handleIdeaNotExistsException(IdeaNotExistsException ex) {
+    public ResponseEntity<ApiError> handleIdeaNotExistsException(IdeaNotExistsException ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(apiExceptionMake(ex, status), status);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiException> handleUserNotFoundException(UserNotFoundException ex) {
+    public ResponseEntity<ApiError> handleUserNotFoundException(UserNotFoundException ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(apiExceptionMake(ex, status), status);
     }
 
 
     @ExceptionHandler(InvalidVoteException.class)
-    public ResponseEntity<ApiException> handleInvalidVoteException(InvalidVoteException ex) {
+    public ResponseEntity<ApiError> handleInvalidVoteException(InvalidVoteException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(apiExceptionMake(ex, status), status);
     }
 
-    private <T extends RuntimeException> ApiException apiExceptionMake(T exception, HttpStatus status) {
-        return new ApiException(exception.getMessage(), status.toString(), ZonedDateTime.now().toString());
+    private <T extends RuntimeException> ApiError apiExceptionMake(T exception, HttpStatus status) {
+        return new ApiError(exception.getMessage(), status.toString(), ZonedDateTime.now().toString());
     }
 }

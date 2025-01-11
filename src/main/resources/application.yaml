@@ -16,6 +16,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+logging:
+  file:
+    name: logs/application.log
+  level:
+    logging:
+      level:
+        root: "warn"
+        org.springframework.web: "debug"
+        org.hibernate: "error"
+
 secret:
   jwt-secret-key: E0EACEB65BFA3BA4C9A10028A1A71322B1A71C597B87DFFBDFAD867CC0B42595
 

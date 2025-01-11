@@ -80,8 +80,8 @@ class IdeaServiceTest {
 
         VoteResponse response = ideaService.vote(voteCommand, voterId);
         assertNotNull(response);
-        assertEquals(response.getIdeaOnVoted(), "Idea");
-        assertEquals(response.getMessage(), "Vote successful");
+        assertEquals("Idea", response.getIdeaOnVoted());
+        assertEquals("Vote successful", response.getMessage());
         ZonedDateTime timeFromResponse = ZonedDateTime.parse(response.getVoteTimeStamp());
         long diff = Duration.between(ZonedDateTime.now(), timeFromResponse).toMillis();
         assertTrue(diff < 300);
@@ -111,8 +111,8 @@ class IdeaServiceTest {
 
         VoteResponse response = ideaService.vote(voteCommand, voterId);
         assertNotNull(response);
-        assertEquals(response.getIdeaOnVoted(), "Idea");
-        assertEquals(response.getMessage(), "Vote successful");
+        assertEquals("Idea", response.getIdeaOnVoted());
+        assertEquals("Vote successful", response.getMessage());
         ZonedDateTime timeFromResponse = ZonedDateTime.parse(response.getVoteTimeStamp());
         long diff = Duration.between(ZonedDateTime.now(), timeFromResponse).toMillis();
         assertTrue(diff < 300);

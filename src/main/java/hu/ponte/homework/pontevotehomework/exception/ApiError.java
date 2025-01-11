@@ -2,29 +2,26 @@ package hu.ponte.homework.pontevotehomework.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiException {
+import java.time.ZonedDateTime;
+
+public class ApiError {
 
     private final String message;
 
     private final HttpStatus status;
 
-    private final String timestamp;
+    private final ZonedDateTime timestamp;
 
-    public ApiException(String message, String status, String timestamp) {
+    public ApiError(String message, String status, String timestamp) {
         this.message = message;
         this.status = HttpStatus.valueOf(status);
-        this.timestamp = timestamp;
+        this.timestamp = ZonedDateTime.parse(timestamp);
     }
 
     public String getMessage() {
         return message;
     }
 
-    public HttpStatus getStatus() {
-        return status;
-    }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
+
 }

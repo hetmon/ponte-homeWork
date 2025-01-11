@@ -9,6 +9,8 @@ import hu.ponte.homework.pontevotehomework.validator.AuthenticationRequestValida
 import hu.ponte.homework.pontevotehomework.validator.RegisterRequestValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ public class AuthenticationController {
     private final AuthService authService;
     private final RegisterRequestValidator registerRequestValidator;
     private final AuthenticationRequestValidator authenticationRequestValidator;
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
@@ -33,6 +36,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest request) {
+        log.info("Post register request: {}", request);
         AuthenticationResponse authenticationResponse = authService.register(request);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.CREATED);
     }
@@ -40,7 +44,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticationRequest command,
                                                                HttpServletRequest request) {
-
+        log.info("Post authenticate request: {}", command);
         return ResponseEntity.ok(authService.authenticate(command, request));
     }
 

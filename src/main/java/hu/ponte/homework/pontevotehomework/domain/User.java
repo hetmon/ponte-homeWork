@@ -30,18 +30,21 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Idea> ideas;
+    private transient List<Idea> ideas;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Roles role;
 
     @OneToMany(mappedBy = "user")
-    private List<Vote> votes;
+    private transient List<Vote> votes;
 
     @Column(name = "usable_votes")
     private Integer usableVotes;
 
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
 
     public void decreaseUsableVotes() {
         if (this.usableVotes > 0) {
@@ -53,17 +56,8 @@ public class User implements UserDetails {
         return ideas;
     }
 
-
     public void setIdeas(List<Idea> ideas) {
         this.ideas = ideas;
-    }
-
-    public List<Vote> getVotes() {
-        return votes;
-    }
-
-    public void setVotes(List<Vote> votes) {
-        this.votes = votes;
     }
 
     public Integer getUsableVotes() {

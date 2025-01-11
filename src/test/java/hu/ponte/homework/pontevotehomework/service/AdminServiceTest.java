@@ -125,24 +125,24 @@ class AdminServiceTest {
         IdeaVoteStateDetails secondElement = response.getDetails().get(1);
         IdeaVoteStateDetails thirdElement = response.getDetails().get(2);
 
-        assertEquals(firstElement.getDetailsList().size(), 0);
+        assertEquals(0, firstElement.getDetailsList().size());
         assertEquals(2, firstElement.getTotalVotes());
-        assertEquals(firstElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(firstElement.getIdeaText(), "Idea");
-        assertEquals(firstElement.getDetailsList().size(), 0);
+        assertEquals("2025-02-17T03:53:48.057003Z", firstElement.getExpireAt());
+        assertEquals("Idea", firstElement.getIdeaText());
+        assertEquals(0, firstElement.getDetailsList().size());
 
 
-        assertEquals(secondElement.getDetailsList().size(), 0);
+        assertEquals(0, secondElement.getDetailsList().size());
         assertEquals(3, secondElement.getTotalVotes());
-        assertEquals(secondElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(secondElement.getIdeaText(), "Idea3");
-        assertEquals(secondElement.getDetailsList().size(), 0);
+        assertEquals("2025-02-17T03:53:48.057003Z", secondElement.getExpireAt());
+        assertEquals("Idea3", secondElement.getIdeaText());
+        assertEquals(0, secondElement.getDetailsList().size());
 
-        assertEquals(thirdElement.getDetailsList().size(), 1);
+        assertEquals(1, thirdElement.getDetailsList().size());
         assertEquals(4, thirdElement.getTotalVotes());
-        assertEquals(thirdElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(thirdElement.getIdeaText(), "Idea4");
-        assertEquals(thirdElement.getDetailsList().size(), 1);
+        assertEquals("2025-02-17T03:53:48.057003Z", thirdElement.getExpireAt());
+        assertEquals("Idea4", thirdElement.getIdeaText());
+        assertEquals(1, thirdElement.getDetailsList().size());
 
         VoteDetails voteDetail = thirdElement.getDetailsList().get(0);
         assertEquals("Tomi Duro", voteDetail.getVoter());
@@ -166,23 +166,23 @@ class AdminServiceTest {
         IdeaVoteStateDetails secondElement = response.getDetails().get(1);
         IdeaVoteStateDetails firstElement = response.getDetails().get(2);
 
-        assertEquals(firstElement.getDetailsList().size(), 0);
+        assertEquals(0, firstElement.getDetailsList().size());
         assertEquals(2, firstElement.getTotalVotes());
-        assertEquals(firstElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(firstElement.getIdeaText(), "Idea");
-        assertEquals(firstElement.getDetailsList().size(), 0);
+        assertEquals("2025-02-17T03:53:48.057003Z", firstElement.getExpireAt());
+        assertEquals("Idea", firstElement.getIdeaText());
+        assertEquals(0, firstElement.getDetailsList().size());
 
-        assertEquals(secondElement.getDetailsList().size(), 0);
+        assertEquals(0, secondElement.getDetailsList().size());
         assertEquals(3, secondElement.getTotalVotes());
-        assertEquals(secondElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(secondElement.getIdeaText(), "Idea3");
-        assertEquals(secondElement.getDetailsList().size(), 0);
+        assertEquals("2025-02-17T03:53:48.057003Z", secondElement.getExpireAt());
+        assertEquals("Idea3", secondElement.getIdeaText());
+        assertEquals(0, secondElement.getDetailsList().size());
 
-        assertEquals(thirdElement.getDetailsList().size(), 1);
+        assertEquals(1, thirdElement.getDetailsList().size());
         assertEquals(4, thirdElement.getTotalVotes());
-        assertEquals(thirdElement.getExpireAt(), "2025-02-17T03:53:48.057003Z");
-        assertEquals(thirdElement.getIdeaText(), "Idea4");
-        assertEquals(thirdElement.getDetailsList().size(), 1);
+        assertEquals("2025-02-17T03:53:48.057003Z", thirdElement.getExpireAt());
+        assertEquals("Idea4", thirdElement.getIdeaText());
+        assertEquals(1, thirdElement.getDetailsList().size());
 
         VoteDetails voteDetail = thirdElement.getDetailsList().get(0);
         assertEquals("Tomi Duro", voteDetail.getVoter());

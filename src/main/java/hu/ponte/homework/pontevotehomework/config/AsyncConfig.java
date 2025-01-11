@@ -12,16 +12,17 @@ import java.util.concurrent.Executor;
 @Configuration
 public class AsyncConfig implements AsyncConfigurer {
 
+    @Override
     @Bean(name = "makeVoteEventExecutor")
     public Executor getAsyncExecutor() {
-        return createThreadPoolTaskExecutor(5, 10, 200);
+        return createThreadPoolTaskExecutor();
     }
 
-    private ThreadPoolTaskExecutor createThreadPoolTaskExecutor(int corePoolSize, int maxPoolSize, int queueCapacity) {
+    private ThreadPoolTaskExecutor createThreadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(corePoolSize);
-        threadPoolTaskExecutor.setMaxPoolSize(maxPoolSize);
-        threadPoolTaskExecutor.setQueueCapacity(queueCapacity);
+        threadPoolTaskExecutor.setCorePoolSize(5);
+        threadPoolTaskExecutor.setMaxPoolSize(10);
+        threadPoolTaskExecutor.setQueueCapacity(200);
         threadPoolTaskExecutor.setThreadNamePrefix("Async-Executor-");
         threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
