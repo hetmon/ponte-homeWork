@@ -8,20 +8,27 @@ public class ApiError {
 
     private final String message;
 
-    private final HttpStatus status;
+    private final String status;
 
-    private final ZonedDateTime timestamp;
+    private final String timeStamp;
 
-    public ApiError(String message, String status, String timestamp) {
+
+
+    public ApiError(String message, HttpStatus status, ZonedDateTime timeStamp) {
         this.message = message;
-        this.status = HttpStatus.valueOf(status);
-        this.timestamp = ZonedDateTime.parse(timestamp);
+        this.status = status.toString();
+        this.timeStamp = timeStamp.toString();
     }
 
     public String getMessage() {
         return message;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
-
+    public String getTimeStamp() {
+        return timeStamp;
+    }
 }

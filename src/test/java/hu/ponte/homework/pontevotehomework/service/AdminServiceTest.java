@@ -5,6 +5,7 @@ import hu.ponte.homework.pontevotehomework.domain.IdeaStatus;
 import hu.ponte.homework.pontevotehomework.dto.income.VoteCommand;
 import hu.ponte.homework.pontevotehomework.dto.outgoing.*;
 import hu.ponte.homework.pontevotehomework.exception.IdeaNotExistsException;
+import hu.ponte.homework.pontevotehomework.repository.IdeaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,13 +31,16 @@ class AdminServiceTest {
 
     @Autowired
     private IdeaService ideaService;
+    @Autowired
+    private IdeaRepository ideaRepository;
 
     @Test
     @Sql("/insert.user.for.test")
     @Sql("/insert.idea.for.test")
     void test_accepting_Ideas() {
 
-        Idea idea = ideaService.unwrapIdea("Idea2");
+        Idea idea = ideaRepository.findIdeaByIdea("Idea2").orElse(null);
+        assert idea != null;
         assertEquals(IdeaStatus.WAITING_FOR_RESPOND, idea.getStatus());
         IdeaAuthorizeResponse response = adminService.accepting(2L);
         assertNotNull(response);
@@ -66,7 +70,9 @@ class AdminServiceTest {
     @Sql("/insert.idea.for.test")
     void test_decline_Ideas() {
 
-        Idea idea = ideaService.unwrapIdea("Idea2");
+        Idea idea = ideaRepository.findIdeaByIdea("Idea2")
+                .orElse(null);
+        assert idea != null;
         assertEquals(IdeaStatus.WAITING_FOR_RESPOND, idea.getStatus());
         IdeaAuthorizeResponse response = adminService.decline(2L);
         assertNotNull(response);
@@ -76,7 +82,9 @@ class AdminServiceTest {
         assertTrue(diff < 300);
         assertEquals("Idea3", response.getIdeaText());
         assertEquals("200 OK", response.getHttpStatus());
-        Idea ideaAfterAccept = ideaService.unwrapIdea("Idea3");
+        Idea ideaAfterAccept = ideaRepository.findIdeaByIdea("Idea3")
+                .orElse(null);
+        assert ideaAfterAccept != null;
         assertEquals(IdeaStatus.DECLINED, ideaAfterAccept.getStatus());
     }
 

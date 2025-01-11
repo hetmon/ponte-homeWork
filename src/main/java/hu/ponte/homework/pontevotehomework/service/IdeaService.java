@@ -74,6 +74,7 @@ public class IdeaService {
         return voteMapper.makeVoteResponse(idea.getIdea(), vote.getVoteAt().toString());
     }
 
+
     private void voteGuard(User user, User toCompare) {
         if (toCompare.getRole() == Roles.ADMIN) {
             throw new InvalidVoteException("You are admin you cannot vote");
@@ -87,7 +88,7 @@ public class IdeaService {
     }
 
     protected Idea unwrapIdea(String ideaText) {
-        return ideaRepository.findIdeaByIdea(ideaText)
+        return ideaRepository.findIdeaByIdeaAndAcceptStatus(ideaText)
                 .orElseThrow(() -> new IdeaNotExistsException(ideaText));
     }
 }

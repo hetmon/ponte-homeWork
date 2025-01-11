@@ -30,4 +30,8 @@ public interface IdeaRepository extends JpaRepository<Idea, Long> {
     @Query(nativeQuery = true, value = "select * from ideas i where i.status='ACCEPTED' and" +
             " i.expire_at > now() order by i.time_of_make")
     List<Idea> getAcceptedForUser();
+
+    @Query(nativeQuery = true, value = "select * from ideas i where i.idea=:idea and i.status='ACCEPTED'")
+    Optional<Idea> findIdeaByIdeaAndAcceptStatus(@Param("idea")String ideaText);
+
 }

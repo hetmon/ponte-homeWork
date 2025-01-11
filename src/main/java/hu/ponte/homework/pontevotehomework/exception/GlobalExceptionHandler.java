@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleJsonParseException(JsonParseException ex) {
         log.error("Json parse error:{}", ex.getMessage());
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        ApiError body = new ApiError(ex.getMessage(), "Invalid JSON request."
-                ,ZonedDateTime.now().toString());
+        ApiError body = new ApiError(ex.getMessage(), status
+                ,ZonedDateTime.now());
         return new ResponseEntity<>(body, status);
     }
 
@@ -60,8 +60,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> defaultErrorHandler(Throwable t) {
         log.error("Internal error:{}", t.getMessage());
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiError body = new ApiError(t.getMessage(), "An unexpected error occurred."
-                ,ZonedDateTime.now().toString());
+        ApiError body = new ApiError(t.getMessage(), status
+                ,ZonedDateTime.now());
 
         return new ResponseEntity<>(body, status);
     }
@@ -89,6 +89,6 @@ public class GlobalExceptionHandler {
     }
 
     private <T extends RuntimeException> ApiError apiExceptionMake(T exception, HttpStatus status) {
-        return new ApiError(exception.getMessage(), status.toString(), ZonedDateTime.now().toString());
+        return new ApiError(exception.getMessage(), status, ZonedDateTime.now());
     }
 }
