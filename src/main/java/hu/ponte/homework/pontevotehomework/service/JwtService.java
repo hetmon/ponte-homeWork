@@ -1,10 +1,11 @@
-package org.petproject.docker.szekugya_plus_auth2.service;
+package hu.ponte.homework.pontevotehomework.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +20,13 @@ import java.util.function.Function;
 @Transactional
 public class JwtService {
 
-    private static final String SECRET_KEY = "E0EACEB65BFA3BA4C9A10028A1A71322B1A71C597B87DFFBDFAD867CC0B42595";
-
+    @Value("${secret.jwt-secret-key}")
+    private String secretKey;
 
     public String createToken(Map<String, Object> claims, UserDetails userDetails) {
+        if (userDetails instanceof hu.ponte.homework.pontevotehomework.domain.User user) {
+            claims.put("role", user.getRole().name());
+        }
         return Jwts
                 .builder()
                 .setClaims(claims)
@@ -33,7 +37,7 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token,UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return userName.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
@@ -47,7 +51,7 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return createToken(new HashMap<>(),userDetails);
+        return createToken(new HashMap<>(), userDetails);
     }
 
     public String extractUserName(String jwt) {
@@ -69,7 +73,7 @@ public class JwtService {
     }
 
     private Key getSiginInkey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

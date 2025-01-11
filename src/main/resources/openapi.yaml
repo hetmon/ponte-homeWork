@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: PonteVote API
+  description: API for managing ideas, voting, and user authentication.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AuthenticationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        firstName:
+          type: string
+        lastName:
+          type: string
+    AuthenticationResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    IdeaCommand:
+      type: object
+      properties:
+        idea:
+          type: string
+
+    VoteCommand:
+      type: object
+      properties:
+        ideaToVoteOn:
+          type: string
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+
+  /api/auth/authenticate:
+    post:
+      summary: Authenticate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+
+  /api/admin/list-all-current/order/asc:
+    get:
+      summary: List all current ideas in ascending order
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of current ideas
+
+  /api/admin/list-all-current/order/desc:
+    get:
+      summary: List all current ideas in descending order
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of current ideas
+
+  /api/admin/list-all-pending:
+    get:
+      summary: List all pending ideas
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of pending ideas
+
+  /api/admin/accept-idea/{id}:
+    put:
+      summary: Accept an idea
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Idea accepted
+
+  /api/admin/decline-idea/{id}:
+    put:
+      summary: Decline an idea
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Idea declined
+
+  /api/idea/make-idea:
+    post:
+      summary: Create a new idea
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdeaCommand'
+      responses:
+        '201':
+          description: Idea created successfully
+
+  /api/idea/all-pending-idea:
+    get:
+      summary: Get all pending ideas
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of pending ideas
+
+  /api/idea/vote-on-idea:
+    put:
+      summary: Vote on an idea
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteCommand'
+      responses:
+        '200':
+          description: Vote registered successfully
+
+security:
+  - BearerAuth: []

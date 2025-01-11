@@ -1,6 +1,6 @@
 package hu.ponte.homework.pontevotehomework.dto.outgoing;
 
-public class MakeIdeaResponse {
+public class IdeaResponse {
 
 
     private String ideaText;

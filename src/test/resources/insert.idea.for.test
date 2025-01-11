@@ -1,0 +1,11 @@
+INSERT INTO ideas (expire_at, idea, status, time_of_make, total_votes, user_id)
+VALUES ('2025-02-17 03:53:48.057003 +00:00', 'Idea', 'ACCEPTED', '2025-01-10 03:53:48.057003 +00:00', 2, 1);
+
+INSERT INTO ideas (expire_at, idea, status, time_of_make, total_votes, user_id)
+VALUES ('2025-02-17 03:53:48.057003 +00:00', 'Idea3', 'ACCEPTED', '2025-01-10 03:53:48.057003 +00:00', 3, 1);
+
+INSERT INTO ideas (expire_at, idea, status, time_of_make, total_votes, user_id)
+VALUES ('2025-02-17 03:53:48.057003 +00:00', 'Idea4', 'ACCEPTED', '2025-01-10 03:53:48.057003 +00:00', 3, 2);
+
+INSERT INTO ideas (expire_at, idea, status, time_of_make, total_votes, user_id)
+VALUES ('2025-02-17 03:53:48.057003 +00:00', 'Idea2', 'WAITING_FOR_RESPOND', '2025-01-10 03:53:48.057003 +00:00', 1, 1);

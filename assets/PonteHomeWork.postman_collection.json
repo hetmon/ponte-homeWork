@@ -1,0 +1,334 @@
+{
+	"info": {
+		"_postman_id": "75af2849-f7c8-4e1d-ac90-ccdf274140ce",
+		"name": "PonteHomeWork",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38618108"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Tomi\",\r\n    \"lastName\":\"Duro\",\r\n    \"email\":\"mail@mail.com\",\r\n    \"password\":\"pw\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"mail@mail.com\",\r\n    \"password\":\"pw\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accepting idea with idea ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJhZG1pbiIsImlhdCI6MTczNjQ3MDQ0NCwiZXhwIjoxNzM2NDcxODg0fQ.fVb20w98gx3011hOlW4oX_3-TE99rcmVxztRutU6lrU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/accept-idea/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"accept-idea",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Declining idea with ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/decline-idea/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"decline-idea",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Idea with wating for accept or decline",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJhZG1pbiIsImlhdCI6MTczNjQ3MzcyNCwiZXhwIjoxNzM2NDc1MTY0fQ.iHen9R6vR65BHXM0IANM6tq8N9fZHWhFT45LKb0gPgA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/list-all-pending",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"list-all-pending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Accepted Idea with order Ascend with total votes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6Im1haWxAbWFpbC5jb20iLCJpYXQiOjE3MzY1NjgxNzQsImV4cCI6MTczNjU2OTYxNH0.wW2EdMmjKbt1-ykEBRW9RIFVE14abMBm-eHqivIS1o4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/list-all-current/order/asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"list-all-current",
+						"order",
+						"asc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Accepted Idea with order desc with total votes",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/list-all-current/order/desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"list-all-current",
+						"order",
+						"desc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Make Idea",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6Im1haWxAbWFpbC5jb20iLCJpYXQiOjE3MzY1NjgxNzQsImV4cCI6MTczNjU2OTYxNH0.wW2EdMmjKbt1-ykEBRW9RIFVE14abMBm-eHqivIS1o4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idea\":\"Sör\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/idea/make-idea",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"idea",
+						"make-idea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Accepted Idea what idea not expired and order asc make time",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6Im1haWxAbWFpbC5jb20iLCJpYXQiOjE3MzY1NjgzMjUsImV4cCI6MTczNjU2OTc2NX0.pwcaGFVSn4r3FqRU9QwhudbK0-OjpDgEFmWtOplv900",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/idea/all-pending-idea",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"idea",
+						"all-pending-idea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put vote on idea with input like",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6Im1haWxAbWFpbC5jb20iLCJpYXQiOjE3MzY1NjgxNzQsImV4cCI6MTczNjU2OTYxNH0.wW2EdMmjKbt1-ykEBRW9RIFVE14abMBm-eHqivIS1o4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ideaToVoteOn\":\"mégsör\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/idea/vote-on-idea",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"idea",
+						"vote-on-idea"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,9 +1,14 @@
-package org.petproject.docker.szekugya_plus_auth2.controller;
+package hu.ponte.homework.pontevotehomework.dto.income;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class AuthenticationRequest {
 
+    @NotBlank
     private String email;
 
+    @NotNull
     private String password;
 
 

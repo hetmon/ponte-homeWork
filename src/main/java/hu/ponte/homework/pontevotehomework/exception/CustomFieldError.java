@@ -1,4 +1,4 @@
-package hu.progmasters.webshop.exception;
+package hu.ponte.homework.pontevotehomework.exception;
 
 public class CustomFieldError {
 

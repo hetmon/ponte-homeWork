@@ -1,26 +1,19 @@
 package hu.ponte.homework.pontevotehomework.dto.outgoing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IdeaVoteStateDetails {
 
-    private Long id;
 
     private String ideaText;
 
     private String expireAt;
 
-    private String timeOfMake;
-
     private Long totalVotes;
 
-    private String status;
+    private List<VoteDetails> detailsList = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getIdeaText() {
         return ideaText;
@@ -38,14 +31,6 @@ public class IdeaVoteStateDetails {
         this.expireAt = expireAt;
     }
 
-    public String getTimeOfMake() {
-        return timeOfMake;
-    }
-
-    public void setTimeOfMake(String timeOfMake) {
-        this.timeOfMake = timeOfMake;
-    }
-
     public Long getTotalVotes() {
         return totalVotes;
     }
@@ -54,12 +39,11 @@ public class IdeaVoteStateDetails {
         this.totalVotes = totalVotes;
     }
 
-    public String getStatus() {
-        return status;
+    public List<VoteDetails> getDetailsList() {
+        return detailsList;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDetailsList(List<VoteDetails> detailsList) {
+        this.detailsList = detailsList;
     }
-
 }

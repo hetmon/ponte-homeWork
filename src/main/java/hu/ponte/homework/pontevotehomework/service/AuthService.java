@@ -1,11 +1,13 @@
-package org.petproject.docker.szekugya_plus_auth2.service;
+package hu.ponte.homework.pontevotehomework.service;
 
-import org.petproject.docker.szekugya_plus_auth2.controller.AuthenticationRequest;
-import org.petproject.docker.szekugya_plus_auth2.controller.AuthenticationResponse;
-import org.petproject.docker.szekugya_plus_auth2.controller.RegisterRequest;
-import org.petproject.docker.szekugya_plus_auth2.domain.Customer;
-import org.petproject.docker.szekugya_plus_auth2.domain.Roles;
-import org.petproject.docker.szekugya_plus_auth2.repository.CustomerRepository;
+import hu.ponte.homework.pontevotehomework.domain.User;
+import hu.ponte.homework.pontevotehomework.dto.UserMapper;
+import hu.ponte.homework.pontevotehomework.dto.income.AuthenticationRequest;
+import hu.ponte.homework.pontevotehomework.dto.income.RegisterRequest;
+import hu.ponte.homework.pontevotehomework.dto.outgoing.AuthenticationResponse;
+import hu.ponte.homework.pontevotehomework.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,46 +15,60 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @Transactional
 public class AuthService {
 
-    private final CustomerRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
 
-    public AuthService(CustomerRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       JwtService jwtService,
+                       AuthenticationManager authenticationManager,
+                       UserMapper userMapper) {
+
+
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.userMapper = userMapper;
     }
 
     public AuthenticationResponse register(RegisterRequest request) {
-        Customer customer = new Customer();
-        customer.setEmail(request.getEmail());
-        customer.setFirstName(request.getFirstName());
-        customer.setLastName(request.getLastName());
-        customer.setPassword(passwordEncoder.encode(request.getPassword()));
-        customer.setRole(Roles.USER);
-        userRepository.save(customer);
-        String jwtToken = jwtService.generateToken(customer);
         AuthenticationResponse response = new AuthenticationResponse();
-        response.setToken(jwtToken);
+        User customer = userMapper.makeUser(request, passwordEncoder.encode(request.getPassword()));
+        userRepository.save(customer);
+        String token = jwtService.generateToken(customer);
+        String fullName = request.getFirstName() + " " + request.getLastName();
+        response.setMessage("Register was successful. Welcome " + fullName + " Now you can login");
+        response.setToken(token);
         return response;
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
-                request.getPassword()));
-        Customer customer = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        String jwtToken = jwtService.generateToken(customer);
+    public AuthenticationResponse authenticate(AuthenticationRequest command, HttpServletRequest request) {
         AuthenticationResponse response = new AuthenticationResponse();
-        response.setToken(jwtToken);
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                command.getEmail(),
+                command.getPassword()));
+        User user = userRepository.findByEmail(command.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        String token = jwtService.generateToken(user);
+        setUserDetailsIntSession(request, user.getId(), user.getEmail());
+        response.setMessage("Login was successful. Welcome " + user.getFirstName() + " " + user.getLastName());
+        response.setToken(token);
         return response;
+    }
+
+    private void setUserDetailsIntSession(HttpServletRequest request, Long userId, String email) {
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", userId);
+        session.setAttribute("email", email);
     }
 }

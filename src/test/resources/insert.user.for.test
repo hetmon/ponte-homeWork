@@ -1,0 +1,11 @@
+insert into users(email, first_name, last_name, password, role,usable_votes)
+values ('mail@mail.com', 'Tomi', 'Duro', '$2a$10$hkq1CHwAar0NBIX3MbYOouZ9ILd2XCMtocYUGIY6ITy0jHrc9LYk2','USER', 1);
+
+insert into users(email, first_name, last_name, password, role,usable_votes)
+values ('mail1@mail.com', 'Tomi', 'Kiss', '$2a$10$hkq1CHwAar0NBIX3MbYOouZ9ILd2XCMtocYUGIY6ITy0jHrc9LYk2','USER', 1);
+
+insert into users(email, first_name, last_name, password, role,usable_votes)
+values ('mail2@mail.com', 'Timi', 'Kiss', '$2a$10$hkq1CHwAar0NBIX3MbYOouZ9ILd2XCMtocYUGIY6ITy0jHrc9LYk2','USER', 0);
+
+insert into users(email, first_name, last_name, password, role,usable_votes)
+values ('admin', 'admin', 'admin', '$2a$10$7j.OlDMLqDJcXGiHiKQ9neQjGxhw8buCNeSaRdb1LnI.ph4F37U0C','ADMIN', 1);

@@ -1,32 +1,56 @@
-package org.petproject.docker.szekugya_plus_auth2.controller;
+package hu.ponte.homework.pontevotehomework.controller;
 
 
-import org.petproject.docker.szekugya_plus_auth2.service.AuthService;
+import hu.ponte.homework.pontevotehomework.dto.income.AuthenticationRequest;
+import hu.ponte.homework.pontevotehomework.dto.income.RegisterRequest;
+import hu.ponte.homework.pontevotehomework.dto.outgoing.AuthenticationResponse;
+import hu.ponte.homework.pontevotehomework.service.AuthService;
+import hu.ponte.homework.pontevotehomework.validator.AuthenticationRequestValidator;
+import hu.ponte.homework.pontevotehomework.validator.RegisterRequestValidator;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
     private final AuthService authService;
+    private final RegisterRequestValidator registerRequestValidator;
+    private final AuthenticationRequestValidator authenticationRequestValidator;
+
 
     @Autowired
-    public AuthenticationController(AuthService authService) {
+    public AuthenticationController(AuthService authService, RegisterRequestValidator registerRequestValidator, AuthenticationRequestValidator authenticationRequestValidator) {
         this.authService = authService;
+        this.registerRequestValidator = registerRequestValidator;
+        this.authenticationRequestValidator = authenticationRequestValidator;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest request) {
+        AuthenticationResponse authenticationResponse = authService.register(request);
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
-        return ResponseEntity.ok(authService.authenticate(request));
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticationRequest command,
+                                                               HttpServletRequest request) {
+
+        return ResponseEntity.ok(authService.authenticate(command, request));
+    }
+
+    @InitBinder("registerRequest")
+    protected void initBinderOfDeliverCommand(WebDataBinder binder) {
+        binder.addValidators(registerRequestValidator);
+    }
+
+    @InitBinder("authenticationRequest")
+    protected void initBinderOfAuthenticationRequest(WebDataBinder binder) {
+        binder.addValidators(authenticationRequestValidator);
     }
 }

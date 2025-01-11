@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
-public class Customer implements UserDetails {
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,26 +23,55 @@ public class Customer implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Idea> ideas;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Roles role;
 
-    public Customer() {
+    @OneToMany(mappedBy = "user")
+    private List<Vote> votes;
+
+    @Column(name = "usable_votes")
+    private Integer usableVotes;
+
+
+    public void decreaseUsableVotes() {
+        if (this.usableVotes > 0) {
+            usableVotes--;
+        }
     }
 
-    public Customer(Long id, String firstName, String lastName, String email, String password, Roles role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    public List<Idea> getIdeas() {
+        return ideas;
+    }
+
+
+    public void setIdeas(List<Idea> ideas) {
+        this.ideas = ideas;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+    }
+
+    public Integer getUsableVotes() {
+        return usableVotes;
+    }
+
+    public void setUsableVotes(Integer usableVotes) {
+        this.usableVotes = usableVotes;
     }
 
     public Long getId() {
@@ -87,7 +116,7 @@ public class Customer implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
     }
 
     public String getPassword() {

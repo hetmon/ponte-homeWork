@@ -1,4 +1,4 @@
-package hu.progmasters.webshop.exception;
+package hu.ponte.homework.pontevotehomework.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -10,9 +10,9 @@ public class ApiException {
 
     private final String timestamp;
 
-    public ApiException(String message, HttpStatus status, String timestamp) {
+    public ApiException(String message, String status, String timestamp) {
         this.message = message;
-        this.status = status;
+        this.status = HttpStatus.valueOf(status);
         this.timestamp = timestamp;
     }
 

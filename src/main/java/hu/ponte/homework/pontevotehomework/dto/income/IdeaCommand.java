@@ -2,7 +2,7 @@ package hu.ponte.homework.pontevotehomework.dto.income;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class MakeIdeaCommand {
+public class IdeaCommand {
 
     @NotBlank
     private String idea;

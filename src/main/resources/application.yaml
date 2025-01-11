@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pontehw
+    username: ponte
+    password: ponte123
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+secret:
+  jwt-secret-key: E0EACEB65BFA3BA4C9A10028A1A71322B1A71C597B87DFFBDFAD867CC0B42595
+

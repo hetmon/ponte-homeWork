@@ -1,4 +1,4 @@
-package hu.progmasters.webshop.exception;
+package hu.ponte.homework.pontevotehomework.exception;
 
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class ValidationError {
     private final List<CustomFieldError> errors = new ArrayList<>();
 
     public void addingCustomFieldError(String field, String message) {
-        errors.add(new CustomFieldError(field,message));
+        errors.add(new CustomFieldError(field, message));
     }
 
     public List<CustomFieldError> getErrors() {

@@ -1,13 +1,21 @@
-package org.petproject.docker.szekugya_plus_auth2.controller;
+package hu.ponte.homework.pontevotehomework.dto.income;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class RegisterRequest {
 
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
+    @Email
     private String email;
 
+    @NotBlank
     private String password;
 
     public String getFirstName() {

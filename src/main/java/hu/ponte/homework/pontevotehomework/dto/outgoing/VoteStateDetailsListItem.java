@@ -17,4 +17,11 @@ public class VoteStateDetailsListItem {
         this.info = info;
     }
 
+    public List<IdeaVoteStateDetails> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<IdeaVoteStateDetails> details) {
+        this.details = details;
+    }
 }
